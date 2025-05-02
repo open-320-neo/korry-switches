@@ -26,16 +26,7 @@ jobs:
         find docs/en -name "*.md" -exec mv {} docs/en/ \;
         rm -rf docs/en/*/  # Remove empty directories
 
-    - uses: fabasoad/translation-action@main
-      id: translation
-      with:
-        provider: google
-        lang: en-de
-        source: Victory
-
-    - name: Print the result
-      run: echo "Translation is '${{ steps.translation.outputs.text }}'"
-      shell: sh
+    
 
     - name: Generate PDFs
       run: |
@@ -46,11 +37,25 @@ jobs:
           -V geometry:margin=1in \
           --toc
 
+    - uses: fabasoad/translation-action@main
+      id: translation
+      with:
+        provider: google
+        lang: en-de
+        source: docs/en/documentation-en.pdf
+
+    - name: Print the result
+      run: echo "Translation is '${{ steps.translation.outputs.text }}'"
+      shell: sh
+
+
     - name: Upload docs as artifact
       uses: actions/upload-pages-artifact@v3
       with:
         name: github-pages
-        path: docs/pdf/
+        path: docs/pdf
+
+
 
   deploy:
     needs: build
