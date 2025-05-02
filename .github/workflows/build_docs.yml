@@ -8,17 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04  # More stable than latest
-    
-    services:
-      libretranslate:
-        image: libretranslate/libretranslate
-        ports:
-          - 5000:5000
-        options: >-
-          --health-cmd "curl -f http://localhost:5000/ || exit 1"
-          --health-interval 10s
-          --health-timeout 120s
-          --health-retries 10
 
     steps:
     - uses: actions/checkout@v4
@@ -37,32 +26,10 @@ jobs:
         find docs/en -name "*.md" -exec mv {} docs/en/ \;
         rm -rf docs/en/*/  # Remove empty directories
 
-    - name: Translate with LibreTranslate
-      timeout-minutes: 10  # Prevent hanging
-      run: |
-        mkdir -p docs/de
-        for file in docs/en/*.md; do
-          echo "Translating $file..."
-          curl -sSf -X POST "http://localhost:5000/translate" \
-            -H "Content-Type: application/json" \
-            -d '{
-              "q": '"$(jq -Rs . < "$file")"',
-              "source": "en",
-              "target": "de",
-              "format": "text"
-            }' | jq -r '.translatedText' > "docs/de/$(basename "$file")"
-        done
-
     - name: Generate PDFs
       run: |
         mkdir -p docs/pdf
         pandoc docs/en/*.md -o docs/pdf/documentation_en.pdf \
-          --pdf-engine=xelatex \
-          -V mainfont="DejaVu Sans" \
-          -V geometry:margin=1in \
-          --toc
-        
-        pandoc docs/de/*.md -o docs/pdf/documentation_de.pdf \
           --pdf-engine=xelatex \
           -V mainfont="DejaVu Sans" \
           -V geometry:margin=1in \
@@ -75,4 +42,3 @@ jobs:
         path: |
           docs/pdf/*.pdf
           docs/en/
-          docs/de/
