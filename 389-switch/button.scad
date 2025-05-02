@@ -32,7 +32,7 @@ lens_size = button_size - wall_thickness*2;
 echo(lens_size);
 lens_radius = 0.7 - 0.4;
 
-button_hole_size = button_size - wall_thickness*2;
+button_hole_size = button_size - wall_thickness*4;
 button_hole_height = button_height + 1;
 
 wall_height = button_height - lens_thickness;
@@ -78,7 +78,7 @@ translate([0,0,20])color("red")union () {
         }
         // Lens
         translate([0, 0, button_height/2 - lens_thickness/2 + 0.5]){
-            lens = [lens_size+5, lens_size+5, lens_thickness + 1];
+            lens = [lens_size, lens_size, lens_thickness + 1];
             cube(lens,true);
         }
     

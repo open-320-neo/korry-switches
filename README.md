@@ -9,3 +9,4 @@ Die Dimensionen wurden aud dem originalen Korry Datenblatt abgeschaut, und danac
 ## Linsen
 
 Die Linsen, auf welchen die texte sichtbar sind, werden mit Acrylglas und dem Lasercutter realisiert.
+
