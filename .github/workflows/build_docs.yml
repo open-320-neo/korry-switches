@@ -36,27 +36,33 @@ jobs:
         lang: en-de
         source: ./docs/documentation-en.md
 
-    - name: Generate PDFs
+    - name: Print the result
+      run: echo "${{ steps.translation.outputs.text }}" > ./docs/documentation-de.md
+      shell: sh
+
+    - name: Generate English PDF
       run: |
         mkdir -p docs/pdf
-        pandoc docs/en/*.md -o docs/pdf/documentation-en.pdf \
+        pandoc docs/documentation-en.md -o docs/pdf/documentation-en.pdf \
           --pdf-engine=xelatex \
           -V mainfont="DejaVu Sans" \
           -V geometry:margin=1in \
           --toc
-
-    - name: Print the result
-      run: echo "Translation is '${{ steps.translation.outputs.text }}'"
-      shell: sh
-
+    
+    - name: Generate German PDF
+      run: |
+        mkdir -p docs/pdf
+        pandoc docs/documentation-de.md -o docs/pdf/documentation-de.pdf \
+          --pdf-engine=xelatex \
+          -V mainfont="DejaVu Sans" \
+          -V geometry:margin=1in \
+          --toc
 
     - name: Upload docs as artifact
       uses: actions/upload-pages-artifact@v3
       with:
         name: github-pages
         path: docs/pdf
-
-
 
   deploy:
     needs: build
