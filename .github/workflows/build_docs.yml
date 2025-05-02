@@ -32,7 +32,7 @@ jobs:
     - uses: fabasoad/translation-action@main
       id: translation
       with:
-        provider: google
+        provider: Linguatools
         lang: en-de
         source: ./docs/documentation-en.md
 
