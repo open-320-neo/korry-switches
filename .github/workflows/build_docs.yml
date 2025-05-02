@@ -7,64 +7,72 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04  # More stable than latest
+    
+    services:
+      libretranslate:
+        image: libretranslate/libretranslate
+        ports:
+          - 5000:5000
+        options: >-
+          --health-cmd "curl -f http://localhost:5000/ || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
     - uses: actions/checkout@v4
 
-    # 1. Setup LibreTranslate Container
-    - name: Start LibreTranslate
-      run: |
-        docker pull libretranslate/libretranslate
-        docker run -d -p 5000:5000 libretranslate/libretranslate --disable-web-ui
-        sleep 30  # Warten bis der Server bereit ist
-
-    # 2. Installiere Tools
-    - name: Install Dependencies
+    - name: Setup Environment
       run: |
         sudo apt-get update
         sudo apt-get install -y pandoc texlive-xetex jq
 
-    # 3. Sammle alle .md Dateien (außerhalb von docs/)
     - name: Collect Markdown Files
       run: |
         mkdir -p docs/en
-        # Finde alle .md Dateien außerhalb von docs/ und kopiere sie nach docs/en/
-        find . -path "./docs" -prune -o -type f -name "*.md" -exec cp --parents {} docs/en/ \;
-        # Entferne den leading ./ von den Pfaden
-        cd docs/en && for file in ./*/*.md; do mv "$file" "./$(echo "$file" | sed 's/\.\///')"; done
+        # Copy all non-docs markdown files while preserving structure
+        find . -name "*.md" -not -path "./docs/*" -exec cp --parents {} docs/en/ \;
+        # Flatten structure in docs/en
+        find docs/en -name "*.md" -exec mv {} docs/en/ \;
+        rm -rf docs/en/*/  # Remove empty directories
 
-    # 4. Übersetze mit LibreTranslate
-    - name: Translate EN → DE
+    - name: Translate with LibreTranslate
+      timeout-minutes: 10  # Prevent hanging
       run: |
         mkdir -p docs/de
         for file in docs/en/*.md; do
-          filename=$(basename "$file")
-          echo "Übersetze: $file"
-          curl -X POST "http://localhost:5000/translate" \
+          echo "Translating $file..."
+          curl -sSf -X POST "http://localhost:5000/translate" \
             -H "Content-Type: application/json" \
             -d '{
               "q": '"$(jq -Rs . < "$file")"',
               "source": "en",
-              "target": "de"
-            }' | jq -r '.translatedText' > "docs/de/$filename"
+              "target": "de",
+              "format": "text"
+            }' | jq -r '.translatedText' > "docs/de/$(basename "$file")"
         done
 
-    # 5. Generiere PDFs mit Pandoc
     - name: Generate PDFs
       run: |
         mkdir -p docs/pdf
-        # Englische PDF
         pandoc docs/en/*.md -o docs/pdf/documentation_en.pdf \
-          --pdf-engine=xelatex -V mainfont="DejaVu Sans" --toc
-          
-        # Deutsche PDF
+          --pdf-engine=xelatex \
+          -V mainfont="DejaVu Sans" \
+          -V geometry:margin=1in \
+          --toc
+        
         pandoc docs/de/*.md -o docs/pdf/documentation_de.pdf \
-          --pdf-engine=xelatex -V mainfont="DejaVu Sans" --toc
+          --pdf-engine=xelatex \
+          -V mainfont="DejaVu Sans" \
+          -V geometry:margin=1in \
+          --toc
 
-    # 6. Optional: PDFs als Artefakt speichern
-    - name: Upload PDFs
+    - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: documentation-pdfs
-        path: docs/pdf/*.pdf
+        name: documentation
+        path: |
+          docs/pdf/*.pdf
+          docs/en/
+          docs/de/
