@@ -2,7 +2,7 @@
 
 To really get the feeling of being in a cockpit, realistic buttons are important. They have to look and work like real airplane buttons. The buttons most used in aircraft are Korry buttons, so we replicate them here for flight sims.
 
-We are not affiliated with Korry, nor do we recommend using this DIY product for real aircraft. For all real aircraft engineering, please go to Korry and use their buttons.
+We are not affiliated with Korry. For all real aircraft engineering, please use Buttons from Korry. Do not use our DIY buttons for real aircraft engineering.
 
 ## Dimensions
 
