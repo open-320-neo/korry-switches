@@ -26,10 +26,21 @@ jobs:
         find docs/en -name "*.md" -exec mv {} docs/en/ \;
         rm -rf docs/en/*/  # Remove empty directories
 
+    - uses: fabasoad/translation-action@main
+      id: translation
+      with:
+        provider: linguatools
+        lang: en-de
+        source: Victory
+
+    - name: Print the result
+      run: echo "Translation is '${{ steps.translation.outputs.text }}'"
+      shell: sh
+
     - name: Generate PDFs
       run: |
         mkdir -p docs/pdf
-        pandoc docs/en/*.md -o docs/pdf/documentation_en.pdf \
+        pandoc docs/en/*.md -o docs/pdf/documentation-en.pdf \
           --pdf-engine=xelatex \
           -V mainfont="DejaVu Sans" \
           -V geometry:margin=1in \
@@ -39,7 +50,7 @@ jobs:
       uses: actions/upload-pages-artifact@v3
       with:
         name: github-pages
-        path: docs/
+        path: docs/pdf/
 
   deploy:
     needs: build
