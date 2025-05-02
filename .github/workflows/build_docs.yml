@@ -42,7 +42,7 @@ jobs:
       with:
         provider: google
         lang: en-de
-        source: docs/en/documentation-en.pdf
+        source: ./docs/en/documentation-en.pdf
 
     - name: Print the result
       run: echo "Translation is '${{ steps.translation.outputs.text }}'"
