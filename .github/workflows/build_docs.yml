@@ -1,0 +1,70 @@
+name: Build Documentation
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    # 1. Setup LibreTranslate Container
+    - name: Start LibreTranslate
+      run: |
+        docker pull libretranslate/libretranslate
+        docker run -d -p 5000:5000 libretranslate/libretranslate --disable-web-ui
+        sleep 30  # Warten bis der Server bereit ist
+
+    # 2. Installiere Tools
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y pandoc texlive-xetex jq
+
+    # 3. Sammle alle .md Dateien (außerhalb von docs/)
+    - name: Collect Markdown Files
+      run: |
+        mkdir -p docs/en
+        # Finde alle .md Dateien außerhalb von docs/ und kopiere sie nach docs/en/
+        find . -path "./docs" -prune -o -type f -name "*.md" -exec cp --parents {} docs/en/ \;
+        # Entferne den leading ./ von den Pfaden
+        cd docs/en && for file in ./*/*.md; do mv "$file" "./$(echo "$file" | sed 's/\.\///')"; done
+
+    # 4. Übersetze mit LibreTranslate
+    - name: Translate EN → DE
+      run: |
+        mkdir -p docs/de
+        for file in docs/en/*.md; do
+          filename=$(basename "$file")
+          echo "Übersetze: $file"
+          curl -X POST "http://localhost:5000/translate" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "q": '"$(jq -Rs . < "$file")"',
+              "source": "en",
+              "target": "de"
+            }' | jq -r '.translatedText' > "docs/de/$filename"
+        done
+
+    # 5. Generiere PDFs mit Pandoc
+    - name: Generate PDFs
+      run: |
+        mkdir -p docs/pdf
+        # Englische PDF
+        pandoc docs/en/*.md -o docs/pdf/documentation_en.pdf \
+          --pdf-engine=xelatex -V mainfont="DejaVu Sans" --toc
+          
+        # Deutsche PDF
+        pandoc docs/de/*.md -o docs/pdf/documentation_de.pdf \
+          --pdf-engine=xelatex -V mainfont="DejaVu Sans" --toc
+
+    # 6. Optional: PDFs als Artefakt speichern
+    - name: Upload PDFs
+      uses: actions/upload-artifact@v3
+      with:
+        name: documentation-pdfs
+        path: docs/pdf/*.pdf
