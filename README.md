@@ -1,12 +1,17 @@
-# Korry Knöpfe
+# Korry Buttons
 
-Damit man das Gefühl bekommt wirklich in einem Cockpit zu sitzen, ist es wichtig dass die Knöpfe realistisch aussehen und auch funktionieren. Wir möchten dass sie einfach im 3d Drucker herstellbar sind, und modular, damit man nicht für jedes panel einen spezifischen print machen muss.
+To realy get the fealing of being in a cockpit, realistic buttons are imprtant. They have to look and work like real airplane buttons. The buttons most used in aircrafts are Korry buttons. So we replicate them here for flightsims.
 
-## Dimensionen
+We are not entangled with Korry nor do we recommend using this DIY product for real aircrafts. Please in all real Aircraft engeneering go to Korry and use their Buttons.
 
-Die Dimensionen wurden aud dem originalen Korry Datenblatt abgeschaut, und danach in metrische werte konvertiert.
+## Dimensions
 
-## Linsen
+The dimensions were copied from the Korry datasheed and converted to metric units.
 
-Die Linsen, auf welchen die texte sichtbar sind, werden mit Acrylglas und dem Lasercutter realisiert.
+## Pins
 
+Every button has a connection with 4 pins. GND, Signal, LED1 and LED2.
+
+## Lenses
+
+The buttons have backlit lenses, on wich texts get visible based on a LED.
