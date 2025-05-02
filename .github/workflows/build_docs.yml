@@ -26,7 +26,15 @@ jobs:
         find docs/en -name "*.md" -exec mv {} docs/en/ \;
         rm -rf docs/en/*/  # Remove empty directories
 
-    
+    - name: Concate Markdown Files
+      run: pandoc docs/en/*.md -o docs/documentation-en.md
+
+    - uses: fabasoad/translation-action@main
+      id: translation
+      with:
+        provider: google
+        lang: en-de
+        source: ./docs/documentation-en.md
 
     - name: Generate PDFs
       run: |
@@ -36,13 +44,6 @@ jobs:
           -V mainfont="DejaVu Sans" \
           -V geometry:margin=1in \
           --toc
-
-    - uses: fabasoad/translation-action@main
-      id: translation
-      with:
-        provider: google
-        lang: en-de
-        source: ./docs/en/documentation-en.pdf
 
     - name: Print the result
       run: echo "Translation is '${{ steps.translation.outputs.text }}'"
