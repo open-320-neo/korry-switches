@@ -39,9 +39,7 @@ jobs:
       uses: actions/upload-pages-artifact@v3
       with:
         name: documentation
-        path: |
-          docs/pdf/*.pdf
-          docs/en/
+        path: docs/
 
   deploy:
     needs: build
