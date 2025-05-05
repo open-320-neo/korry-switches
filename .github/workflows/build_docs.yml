@@ -52,7 +52,7 @@ jobs:
     - name: Generate German PDF
       run: |
         mkdir -p docs/pdf
-        pandoc docs/documentation-de.md -o docs/pdf/documentation-de.pdf \
+        pandoc docs/documentation-de.md -o docs/pdf/README.pdf \
           --pdf-engine=xelatex \
           -V mainfont="DejaVu Sans" \
           -V geometry:margin=1in \
