@@ -774,6 +774,26 @@
 	)
 	(wire
 		(pts
+			(xy 128.27 69.85) (xy 128.27 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0a37b4e2-a6d4-454c-a5ba-bd95c549f11c")
+	)
+	(wire
+		(pts
+			(xy 128.27 64.77) (xy 132.08 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0b5dedb7-3778-44b1-8934-18541f947ba9")
+	)
+	(wire
+		(pts
 			(xy 55.88 78.74) (xy 62.23 78.74)
 		)
 		(stroke
@@ -854,16 +874,6 @@
 	)
 	(wire
 		(pts
-			(xy 104.14 59.69) (xy 128.27 59.69)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "52fa795c-34f7-4a54-b596-f27c6a373c0d")
-	)
-	(wire
-		(pts
 			(xy 85.09 60.96) (xy 104.14 60.96)
 		)
 		(stroke
@@ -871,16 +881,6 @@
 			(type default)
 		)
 		(uuid "5447b9ab-df34-438b-b792-bf1709569580")
-	)
-	(wire
-		(pts
-			(xy 125.73 40.64) (xy 133.35 40.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "59b1ea38-9812-4f81-8b3c-7b7f6018553c")
 	)
 	(wire
 		(pts
@@ -904,23 +904,33 @@
 	)
 	(wire
 		(pts
-			(xy 128.27 57.15) (xy 119.38 57.15)
+			(xy 119.38 57.15) (xy 132.08 57.15)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "7be23b04-adcb-46af-87c4-94cf029479ca")
+		(uuid "729638b8-95fa-46dc-86af-5dac728c89a1")
 	)
 	(wire
 		(pts
-			(xy 128.27 54.61) (xy 125.73 54.61)
+			(xy 104.14 59.69) (xy 132.08 59.69)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "b2ecd0a3-1843-4039-946d-80811eb951fc")
+		(uuid "9c900bf8-84ae-49de-82aa-cde29316a12d")
+	)
+	(wire
+		(pts
+			(xy 104.14 62.23) (xy 132.08 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cda931aa-1d99-406d-9682-5ae5fb3843e2")
 	)
 	(wire
 		(pts
@@ -931,16 +941,6 @@
 			(type default)
 		)
 		(uuid "d23fc865-7695-4c71-bd2a-af61b37a3ccb")
-	)
-	(wire
-		(pts
-			(xy 128.27 62.23) (xy 104.14 62.23)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d2f99d6e-0d4d-49fc-ad4d-c713356d660b")
 	)
 	(wire
 		(pts
@@ -962,29 +962,9 @@
 		)
 		(uuid "e5c6a73c-3a83-4549-b923-00e3f2c51f60")
 	)
-	(wire
-		(pts
-			(xy 125.73 54.61) (xy 125.73 40.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f1ac80ff-6382-4e7f-840e-fceefcf8c13b")
-	)
-	(wire
-		(pts
-			(xy 133.35 40.64) (xy 133.35 44.45)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f2253b4a-62bf-4fc0-b91c-e22644296c9f")
-	)
 	(symbol
 		(lib_id "power:GND")
-		(at 133.35 44.45 0)
+		(at 128.27 69.85 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -993,7 +973,7 @@
 		(fields_autoplaced yes)
 		(uuid "0d5dafb8-e4f3-4d96-90ba-ffa5af05e6bc")
 		(property "Reference" "#PWR0101"
-			(at 133.35 50.8 0)
+			(at 128.27 76.2 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1002,7 +982,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 133.35 49.53 0)
+			(at 128.27 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1010,7 +990,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 133.35 44.45 0)
+			(at 128.27 69.85 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1019,7 +999,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 133.35 44.45 0)
+			(at 128.27 69.85 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1028,7 +1008,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 133.35 44.45 0)
+			(at 128.27 69.85 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1073,7 +1053,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
 			(at 66.04 80.518 90)
 			(effects
 				(font
@@ -1339,7 +1319,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
 			(at 66.04 62.738 90)
 			(effects
 				(font
@@ -1449,7 +1429,7 @@
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x04")
-		(at 133.35 57.15 0)
+		(at 137.16 59.69 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1458,7 +1438,7 @@
 		(fields_autoplaced yes)
 		(uuid "d5f0102a-ccd2-481d-aac9-a500663069d8")
 		(property "Reference" "J1"
-			(at 135.89 57.1499 0)
+			(at 139.7 59.6899 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1467,7 +1447,7 @@
 			)
 		)
 		(property "Value" "Conn_01x04"
-			(at 135.89 59.6899 0)
+			(at 139.7 62.2299 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1476,7 +1456,7 @@
 			)
 		)
 		(property "Footprint" "Connector_JST:JST_ZH_B4B-ZR_1x04_P1.50mm_Vertical"
-			(at 133.35 57.15 0)
+			(at 137.16 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1485,7 +1465,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 133.35 57.15 0)
+			(at 137.16 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1494,7 +1474,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 133.35 57.15 0)
+			(at 137.16 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
