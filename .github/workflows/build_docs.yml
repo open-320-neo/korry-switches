@@ -22,22 +22,26 @@ jobs:
         mkdir -p docs/en
 
         # Copy all non-docs markdown files while preserving structure
-        find . -name "*.md" -not -path "./docs/*" -exec cp --parents {} docs/en/ \;
+        find . -name "*.en.md" -not -path "./docs/*" -exec cp --parents {} docs/en/ \;
 
         # Flatten structure in docs/en
         find docs/en -name "*.en.md" -exec mv {} docs/en/ \;
-        rm -rf docs/en/*/  # Remove empty directories
+
+        # Delete all now empty directorys
+        rm -rf docs/en/*/
 
     - name: Collect german markdown files
       run: |
         mkdir -p docs/de
 
         # Copy all non-docs markdown files while preserving structure
-        find . -name "*.md" -not -path "./docs/*" -exec cp --parents {} docs/de/ \;
+        find . -name "*.de.md" -not -path "./docs/*" -exec cp --parents {} docs/de/ \;
 
         # Flatten structure in docs/en
         find docs/de -name "*.de.md" -exec mv {} docs/de/ \;
-        rm -rf docs/de/*/  # Remove empty directories
+
+        # Delete all now empty directorys
+        rm -rf docs/de/*/
 
     - name: Concate english Markdown Files
       run: pandoc docs/en/*.md -o docs/documentation-en.md
