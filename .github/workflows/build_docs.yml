@@ -17,28 +17,33 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y pandoc texlive-xetex jq
 
-    - name: Collect Markdown Files
+    - name: Collect english markdown files
       run: |
         mkdir -p docs/en
+
         # Copy all non-docs markdown files while preserving structure
         find . -name "*.md" -not -path "./docs/*" -exec cp --parents {} docs/en/ \;
+
         # Flatten structure in docs/en
-        find docs/en -name "*.md" -exec mv {} docs/en/ \;
+        find docs/en -name "*.en.md" -exec mv {} docs/en/ \;
         rm -rf docs/en/*/  # Remove empty directories
 
-    - name: Concate Markdown Files
+    - name: Collect german markdown files
+      run: |
+        mkdir -p docs/de
+
+        # Copy all non-docs markdown files while preserving structure
+        find . -name "*.md" -not -path "./docs/*" -exec cp --parents {} docs/de/ \;
+
+        # Flatten structure in docs/en
+        find docs/de -name "*.de.md" -exec mv {} docs/de/ \;
+        rm -rf docs/de/*/  # Remove empty directories
+
+    - name: Concate english Markdown Files
       run: pandoc docs/en/*.md -o docs/documentation-en.md
 
-    - uses: fabasoad/translation-action@main
-      id: translation
-      with:
-        provider: google
-        lang: en-de
-        source: ./docs/documentation-en.md
-
-    - name: Print the result
-      run: echo "${{ steps.translation.outputs.text }}" > ./docs/documentation-de.md
-      shell: sh
+    - name: Concate german Markdown Files
+      run: pandoc docs/de/*.md -o docs/documentation-de.md
 
     - name: Generate English PDF
       run: |
