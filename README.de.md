@@ -2,7 +2,7 @@
 
 Dies ist eine Bibliothek aller Module welche im Flugsimulator benutzt werden.
 
-## Pereferien
+## Geplane Module
 
 - Korry Button 389 -> (button, on_off_led, fault_led)
 - Small Korry Button -> (button, on_off_led, illumination?)
@@ -64,3 +64,8 @@ Um die Aktoren möglichst modular zu halten, benötigt jeder Taster eine kleine 
 
 Alle teile zusammensetzen.
 
+## Controller
+
+Dies ist ein Kontrollmodul, an welches die Pereferie Module angeschlossen werden können. Dieses Modul ist einfach ein Arduino mit Mobiflight software. Jedoch sitzt dieser Arduino auf einer Platine welche anschlüsse für die Pereferien anbietet.
+
+Bei der Jetzigen version der Platine sind analog und digital Pins noch nicht auf Mobigliht abgestimmt, und GND wurde nicht verbunden.
